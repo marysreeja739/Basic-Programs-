@@ -1,0 +1,150 @@
+import java.util.*;
+public class Linked
+{
+   Node head;
+   static class Node
+   {
+      int data;
+      Node next;
+      Node(int d)
+      {
+         data = d;
+         next = null;
+      }
+   }
+   public static Linked insert(Linked h, int d)
+   {
+      Node newNode = new Node(d);
+      if (h.head == null)
+      {
+         h.head = newNode;
+      }
+      else
+      {
+         Node temp = h.head;
+         while (temp.next != null)
+         {
+            temp = temp.next;
+         }
+         temp.next = newNode;
+      }
+      return h;
+   }
+
+    public static void printList(Linked list)
+    {
+        Node currNode = list.head;
+        System.out.print("LinkedList: ");
+        while (currNode != null) {
+            System.out.print(currNode.data + " ");
+            currNode = currNode.next;
+        }
+        System.out.println();
+    }
+    public static void deleteK(Linked list, int k) {
+        Node head=list.head;
+        if (head == null || k <= 0){
+            System.out.print("Empty");
+        }
+        Node curr = head;
+        Node prev = null;
+        int count = 0;
+        while (curr != null) {
+            count++;
+            if (count % k == 0) {
+                if (prev != null) {
+                    prev.next = curr.next;
+                }
+               else {
+                    head = curr.next;
+                }
+            }
+           else {
+                prev = curr;
+            }
+            curr = curr.next;
+        }
+        printList(list);
+    }
+    public static void OddEven(Linked list)
+    {
+        Node h=list.head;
+        Linked odd=new Linked();
+        Linked even=new Linked();
+        int n=0;
+        while(h!=null)
+        {
+            n=h.data;
+            if(n%2==0)
+            {
+                even=insert(even,n);
+            }
+            else
+            {
+                odd=insert(odd,n);
+            }
+            h=h.next;
+        }
+        System.out.println("Odd: ");
+        printList(odd);
+        System.out.println("Even: ");
+        printList(even);
+    }
+    public static int count(Node head, int key) {
+        if (head == null) {
+            return 0;
+        }
+        int ans = count(head.next, key);
+        if (head.data == key) {
+            ans++;
+        }
+        return ans;
+    }
+    public static void Occur(Linked list)
+    {
+        Node h=list.head;
+        Node temp=list.head;
+        System.out.println("Occurence: ");
+        while(h!=null)
+        {
+            int res=count(temp,h.data);
+            System.out.println(h.data+":"+res);
+            h=h.next;
+        }
+    }
+    public static void reverse(Linked list)
+    {
+        Stack<Integer> rev=new Stack<>();
+        Node h=list.head;
+        while(h!=null)
+        {
+            rev.push(h.data);
+            h=h.next;
+        }
+        while(!rev.isEmpty())
+        {
+            System.out.print(rev.pop()+"->");
+        }
+        System.out.println("null");
+    }
+    public static void main(String[] args)
+    {
+        Linked list = new Linked();
+        list = insert(list, 1);
+        list = insert(list, 2);
+        list = insert(list, 3);
+        list = insert(list, 4);
+        list = insert(list, 5);
+        list = insert(list, 6);
+        list = insert(list, 7);
+        list = insert(list, 8);
+        printList(list);
+        System.out.println("Reverse: ");
+        reverse(list);
+        OddEven(list);
+        Occur(list);
+        int k=2;
+        System.out.println("Remove K element K="+k);
+        deleteK(list,k);
+    }
+}
