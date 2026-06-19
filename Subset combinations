@@ -1,0 +1,23 @@
+import java.util.ArrayList;
+import java.util.List;
+public class SubsetGenerator {
+    public static List<List<Integer>> generateSubsets(int[] nums) {
+        List<List<Integer>> allSubsets = new ArrayList<>();
+        allSubsets.add(new ArrayList<>());
+        for (int num : nums) {
+            int currentSize = allSubsets.size();
+            for (int i = 0; i < currentSize; i++) {
+                List<Integer> newSubset = new ArrayList<>(allSubsets.get(i));
+                newSubset.add(num);
+                allSubsets.add(newSubset);
+            }
+        }
+        return allSubsets;
+    }
+    public static void main(String[] args) {
+        int[] originalArray = {1, 2, 3};
+        List<List<Integer>> result = generateSubsets(originalArray);
+        System.out.println("Total subsets generated: " + result.size());
+        System.out.println("The subsets are: " + result);
+    }
+}
